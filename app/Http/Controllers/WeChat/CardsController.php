@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\WeChat;
 
 
-
+//卡券控制器
 class CardsController extends WeChatController
 {
     public $card;

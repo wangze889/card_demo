@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Upload\UploadImageController;
 use Illuminate\Http\Request;
 
+//子商户控制器
 class MerchantsController extends CardsController
 {
     public $merchant;
@@ -28,29 +29,10 @@ class MerchantsController extends CardsController
 //    上传商户授权函图片
     public function uploadProtocolImg(Request $request)
     {
-        $url = UploadImageController::uploadImg('protocol',$request);
-        if($url){
-            $data = $this->app->media->uploadImage(public_path('uploads/'.$url));
-            return WeChatResponse::handle($data);
-        }else{
-            return $this->failed('上传失败');
-        }
+        return (new MediaController())->uploadByType('protocol');
     }
 
-//  上传商户logo
-    public function uploadLogo(Request $request)
-    {
-        $url = UploadImageController::uploadImg('merchant_logo',$request);
-        if($url){
-            $data = $this->app->material->uploadImage(public_path('uploads/'.$url));
-            return WeChatResponse::handle($data);
-        }else{
-            return $this->failed('上传失败');
-        }
-    }
-
-
-//  获取授权函图片
+    //  获取授权函图片
     public function getProtocolImgByMediaId($mediaId)
     {
         $stream = $this->app->media->get($mediaId);
@@ -63,7 +45,23 @@ class MerchantsController extends CardsController
         }
     }
 
+//  上传商户logo
+    public function uploadLogo(Request $request)
+    {
+        return (new MaterialController())->uploadByType($request);
+    }
 
+//  上传营业执照或个体工商户营业执照彩照或扫描件
+    public function uploadAgreement(Request $request)
+    {
+        return (new MaterialController())->uploadByType($request);
+    }
+
+//上传营业执照内登记的经营者身份证彩照或扫描件
+    public function upLoadOperator(Request $request)
+    {
+        return (new MaterialController())->uploadByType($request);
+    }
 
 
 }
