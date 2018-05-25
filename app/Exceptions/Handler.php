@@ -7,6 +7,10 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    private $code;
+    private $msg;
+    private $errorCode;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -48,6 +52,33 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if($request->is('api/*')) {
+            if($exception instanceof BaseException){
+                $this->errorCode = $exception->errorCode;
+                $this->code = $exception->code;
+                $this->msg = $exception->msg;
+            }else{
+                $error = $this->convertExceptionToResponse($exception);
+                $this->code = $error->getStatusCode();
+                $this->msg = 'something error';
+                if (config('app.debug')) {
+                    $this->msg = empty($exception->getMessage()) ? 'something error' : $exception->getMessage();
+//                if ($error->getStatusCode() >= 500) {
+//                    if (config('app.debug')) {
+//                        $response['trace'] = $exception->getTraceAsString();
+//                        $response['code'] = $exception->getCode();
+//                    }
+//                }
+                }
+            }
+            $response = [
+                'code'=>$this->code,
+                'errorCode'=>$this->errorCode,
+                'msg'=>$this->msg,
+            ];
+            return response()->json($response, $this->code);
+        }else{
+            return parent::render($request, $exception);
+        }
     }
 }

@@ -9,16 +9,17 @@
 namespace App\Http\Controllers\WeChat;
 
 
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use EasyWeChat;
 
-class WeChatController extends Controller
+class WeChatController extends ApiController
 {
     public $app;
 
     public function __construct()
     {
-        $this->app = EasyWeChat::officialAccount();
+        $this->app = EasyWeChat::officialAccount('test');
     }
 
     public function serve()
@@ -34,6 +35,11 @@ class WeChatController extends Controller
     public function test()
     {
         return "this is test";
+    }
+
+    public function token()
+    {
+        return $this->app->app_id;
     }
 
 }
