@@ -15,7 +15,7 @@ use EasyWeChat;
 
 class WeChatController extends ApiController
 {
-    public $app;
+    protected $app;
 
     public function __construct()
     {

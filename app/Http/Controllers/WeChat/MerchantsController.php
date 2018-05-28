@@ -13,6 +13,7 @@ use App\Exceptions\BaseException;
 use App\Helpers\Api\WeChatResponse;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Upload\UploadImageController;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 //子商户控制器
@@ -52,5 +53,15 @@ class MerchantsController extends CardsController
         return $this->merchant->create($attributes);
     }
 
+    public function getOneInfoByMerchantId(Request $request)
+    {
+        $merchant_id = $request->merchant_id;
+        $access_token = $this->app->access_token;
+        $client = new Client();
+        $data = $client->request('POST', "https://api.weixin.qq.com/card/submerchant/get?access_token=$access_token", [
+            'merchant_id' => $merchant_id
+        ]);
+        return WeChatResponse::handle($data);
+    }
 
 }
