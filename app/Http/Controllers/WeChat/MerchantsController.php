@@ -20,17 +20,17 @@ class MerchantsController extends CardsController
 {
     public $merchant;
 
+    const info_keys = [
+        'app_id', 'brand_name', 'logo_url', 'protocol', 'end_time', 'primary_category_id', 'secondary_category_id', 'agreement_media_id', 'operator_media_id'
+    ];
+
     public function __construct()
     {
         parent::__construct();
         $this->merchant = $this->card->sub_merchant;
     }
 
-//    上传商户授权函图片
-    public function uploadProtocolImg(Request $request)
-    {
-        return (new MediaController())->uploadByType('protocol');
-    }
+
 
     //  获取授权函图片
     public function getProtocolImgByMediaId($mediaId)
@@ -45,22 +45,10 @@ class MerchantsController extends CardsController
         }
     }
 
-//  上传商户logo
-    public function uploadLogo(Request $request)
+    public function create(Request $request)
     {
-        return (new MaterialController())->uploadByType($request);
-    }
-
-//  上传营业执照或个体工商户营业执照彩照或扫描件
-    public function uploadAgreement(Request $request)
-    {
-        return (new MaterialController())->uploadByType($request);
-    }
-
-//上传营业执照内登记的经营者身份证彩照或扫描件
-    public function upLoadOperator(Request $request)
-    {
-        return (new MaterialController())->uploadByType($request);
+        $attributes = $request->input(self::info_keys);
+        return $this->merchant->create($attributes);
     }
 
 
