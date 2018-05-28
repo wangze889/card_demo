@@ -61,7 +61,7 @@ class MerchantsController extends CardsController
         $data = $client->request('POST', "https://api.weixin.qq.com/card/submerchant/get?access_token=$access_token", [
             'merchant_id' => $merchant_id
         ]);
-        return WeChatResponse::handle($data);
+        return $data;
     }
 
 }
