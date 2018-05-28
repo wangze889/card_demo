@@ -47,7 +47,8 @@ class MerchantsController extends CardsController
 
     public function create(Request $request)
     {
-        $attributes = $request->input(self::info_keys);
+        $attributes = $request->only(self::info_keys);
+        $attributes['end_time'] = strtotime($attributes['end_time']);
         return $this->merchant->create($attributes);
     }
 
