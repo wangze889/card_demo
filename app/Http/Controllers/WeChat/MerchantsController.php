@@ -57,6 +57,7 @@ class MerchantsController extends CardsController
     {
         $merchant_id = $request->input('merchant_id');
         $access_token = (new AccessTokenController())->getToken();
+        return $access_token;
         $client = new Client();
         $data = $client->request('POST', "https://api.weixin.qq.com/card/submerchant/get?access_token=$access_token", [
             'merchant_id' => $merchant_id
