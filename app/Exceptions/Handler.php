@@ -61,6 +61,7 @@ class Handler extends ExceptionHandler
                 $error = $this->convertExceptionToResponse($exception);
                 $this->code = $error->getStatusCode();
                 $this->msg = 'something error';
+                $this->errorCode = 10000;
                 if (config('app.debug')) {
                     $this->msg = empty($exception->getMessage()) ? 'something error' : $exception->getMessage();
 //                if ($error->getStatusCode() >= 500) {
