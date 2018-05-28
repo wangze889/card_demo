@@ -27,5 +27,5 @@ Route::post('material/upload','Wechat\MaterialController@uploadByType');
 Route::post('media/upload','Wechat\MediaController@uploadByType');
 
 //子商户
-Route::post('/merchant/create','WeChat\MerchantsController@create');
+Route::post('merchant/create','WeChat\MerchantsController@create');
 
