@@ -19,7 +19,8 @@ class WeChatController extends ApiController
 
     public function __construct()
     {
-        $this->app = EasyWeChat::officialAccount('test');
+//        $this->app = EasyWeChat::officialAccount('test');
+        $this->app = EasyWeChat::officialAccount();
     }
 
     public function serve()
