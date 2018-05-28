@@ -38,9 +38,6 @@ class WeChatController extends ApiController
         return "this is test";
     }
 
-    public function token()
-    {
-        return $this->app->app_id;
-    }
+
 
 }

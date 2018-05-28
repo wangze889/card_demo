@@ -16,13 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/wechat/token','WeChat\WeChatController@token');
+Route::get('wechat/token','WeChat\AccessTokenController@getToken');
 //Route::post('/upload/{type}',"Upload\UploadImageController@uploadImg");
 Route::post('/protocol/upload',"WeChat\MerchantsController@uploadProtocolImg");
 Route::get('/protocol/get/{mediaId}',"WeChat\MerchantsController@getProtocolImgByMediaId");
 Route::post('/merchant/logo/upload','WeChat\MerchantsController@uploadLogo');
 
-Route::get('')
 
 //上传素材
 Route::post('material/upload','Wechat\MaterialController@uploadByType');
