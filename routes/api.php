@@ -31,3 +31,4 @@ Route::post('media/upload','Wechat\MediaController@uploadByType');
 Route::post('merchant/create','WeChat\MerchantsController@create');
 Route::post('merchant/get','WeChat\MerchantsController@getOneInfoByMerchantId');
 
+Route::post('test','WeChat\MerchantsController@test');

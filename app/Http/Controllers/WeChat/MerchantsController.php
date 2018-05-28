@@ -13,6 +13,7 @@ use App\Exceptions\BaseException;
 use App\Helpers\Api\WeChatResponse;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Upload\UploadImageController;
+use App\Models\MerchantCheckResult;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -62,6 +63,22 @@ class MerchantsController extends CardsController
         $data = json_decode($data->getBody(),true);
         $res = WeChatResponse::handle($data);
         return $this->respond($res);
+    }
+
+    public function test(MerchantCheckResult $result)
+    {
+        $data = [
+            'ToUserName' => 'asd',
+            'FromUserName' =>'asd',
+            'CreateTime'=>111111,
+            'MsgType'=>'asd',
+            'Event'=>'asd',
+            'MerchantId'=>1312,
+            'IsPass'=>1,
+            'Reason'=>'no reason'
+        ];
+        $res = $result->create($data);
+        return $data;
     }
 
 }
