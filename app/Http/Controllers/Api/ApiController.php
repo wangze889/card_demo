@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class ApiController extends Controller
 {
 
-    use ApiResponse1;
+    use ApiResponse;
 
     // 其他通用的Api帮助函数
 
