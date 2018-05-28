@@ -22,3 +22,7 @@ Route::post('/protocol/upload',"WeChat\MerchantsController@uploadProtocolImg");
 Route::get('/protocol/get/{mediaId}',"WeChat\MerchantsController@getProtocolImgByMediaId");
 Route::post('/merchant/logo/upload','WeChat\MerchantsController@uploadLogo');
 
+
+Route::post('material/upload','Wechat\MaterialController@uploadByType');
+Route::post('media/upload','Wechat\MediaController@uploadByType');
+

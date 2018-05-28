@@ -41,7 +41,7 @@ Class WeChatResponse extends Controller
         $res['code'] = 200;
         $res['errorCode'] = 0;
         $res['data'] = $data;
-        return response()->json($res);
+        return $res;
 
     }
 
