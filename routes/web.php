@@ -14,5 +14,4 @@
 Route::get('/', function () {
     return "card_demo";
 });
-Route::any('serve',"WeChat\WeChatController@serve");
-Route::any('test',"WeChat\WeChatController@test");
+//Route::any('wechat/serve',"WeChat\WeChatController@serve");

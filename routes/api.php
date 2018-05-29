@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::any('wechat/serve',"WeChat\WeChatController@serve");
+
 Route::get('wechat/token','WeChat\AccessTokenController@getToken');
 //Route::post('/upload/{type}',"Upload\UploadImageController@uploadImg");
 Route::post('/protocol/upload',"WeChat\MerchantsController@uploadProtocolImg");
