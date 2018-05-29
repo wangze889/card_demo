@@ -62,7 +62,7 @@ class MerchantsController extends CardsController
 //  分页拉取列表
     public function lst()
     {
-        return Merchant::all();
+        return Merchant::orderBy('id','desc')->get();
     }
 
 //    获取子商户总数
