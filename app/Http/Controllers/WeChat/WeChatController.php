@@ -32,7 +32,7 @@ class WeChatController extends ApiController
                     if($message['Event']=='card_merchant_check_result'){
                         $merchant = new MerchantCheckResult();
                         $merchant->create($message);
-                        return "收到";
+                        return "收到审核事件通知";
                     }
                     break;
                 case 'text':
