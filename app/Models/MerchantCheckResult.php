@@ -9,11 +9,7 @@
 namespace App\Models;
 
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-
-class MerchantCheckResult extends Model
+class MerchantCheckResult extends BaseModel
 {
-    protected $guarded = [];
 
 }

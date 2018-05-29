@@ -31,7 +31,15 @@ Route::post('material/upload','Wechat\MaterialController@uploadByType');
 Route::post('media/upload','Wechat\MediaController@uploadByType');
 
 //子商户
-Route::post('merchant/create','WeChat\MerchantsController@create');
-Route::post('merchant/get','WeChat\MerchantsController@getOneInfoByMerchantId');
+
+Route::group(['prefix'=>'merchant'],function (){
+    Route::get('list','WeChat\MerchantsController@lst');
+    Route::post('create','WeChat\MerchantsController@create');
+    Route::get('count','WeChat\MerchantsController@sum');
+    Route::post('get','WeChat\MerchantsController@getOneInfoByMerchantId');
+    Route::post('platCheck','WeChat\MerchantsController@platformCheck');
+    Route::post('push','WeChat\MerchantsController@createToWeChat');
+});
+
 
 Route::post('test','WeChat\MerchantsController@test');

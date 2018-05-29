@@ -83,7 +83,7 @@ trait ApiResponse
     }
 
 
-    public function success($msg, array $data ,$code = FoundationResponse::HTTP_BAD_REQUEST, $errorCode = 0 )
+    public function success($msg, array $data ,$code = FoundationResponse::HTTP_OK, $errorCode = 0 )
     {
         return $this->message($msg, $data, $code, $errorCode);
     }

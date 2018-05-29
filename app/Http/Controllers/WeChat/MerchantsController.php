@@ -13,6 +13,7 @@ use App\Exceptions\BaseException;
 use App\Helpers\Api\WeChatResponse;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Upload\UploadImageController;
+use App\Models\Merchant;
 use App\Models\MerchantCheckResult;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -22,15 +23,70 @@ class MerchantsController extends CardsController
 {
     public $merchant;
 
-    const info_keys = [
-        'app_id', 'brand_name', 'logo_url', 'protocol', 'end_time', 'primary_category_id', 'secondary_category_id', 'agreement_media_id', 'operator_media_id'
-    ];
-
     public function __construct()
     {
         parent::__construct();
         $this->merchant = $this->card->sub_merchant;
     }
+
+
+//  创建商户，等待平台审核
+    public function create(Request $request)
+    {
+        $merchant = new Merchant();
+        $res = $merchant->create($request);
+        if($res){
+            return $this->success('创建成功',$res->toArray());
+        }else{
+            $this->failed('上传失败');
+        }
+    }
+
+//    平台审核
+    public function platformCheck(Request $request)
+    {
+        $merchant = new Merchant();
+        return $merchant->platformCheck($request);
+    }
+
+
+//    向微信端提交创建申请
+    public function pushCreateToWeChat(Request $request)
+    {
+        $merchant = new Merchant();
+        $data =  $merchant->createToWeChat($request);
+        return WeChatResponse::handle($data);
+    }
+
+
+//  分页拉取列表
+    public function lst()
+    {
+        return Merchant::all()->orderBy('id','desc');
+    }
+
+//    获取子商户总数
+    public function sum()
+    {
+        return Merchant::count();
+    }
+
+
+
+//获取单个商户信息
+    public function getOneInfoByMerchantId(Request $request)
+    {
+        $merchant_id = $request->input('merchant_id');
+        $access_token = (new AccessTokenController())->getToken();
+        $client = new Client();
+        $data = $client->post("https://api.weixin.qq.com/card/submerchant/get?access_token=$access_token", ['json'=>['merchant_id' => $merchant_id]]);
+        $data = json_decode($data->getBody(),true);
+        $res = WeChatResponse::handle($data);
+        return $this->respond($res);
+    }
+
+
+
 
 
 
@@ -45,40 +101,6 @@ class MerchantsController extends CardsController
         }else{
             return false;
         }
-    }
-
-    public function create(Request $request)
-    {
-        $attributes = $request->only(self::info_keys);
-        $attributes['end_time'] = strtotime($attributes['end_time']);
-        return $this->merchant->create($attributes);
-    }
-
-    public function getOneInfoByMerchantId(Request $request)
-    {
-        $merchant_id = $request->input('merchant_id');
-        $access_token = (new AccessTokenController())->getToken();
-        $client = new Client();
-        $data = $client->post("https://api.weixin.qq.com/card/submerchant/get?access_token=$access_token", ['json'=>['merchant_id' => $merchant_id]]);
-        $data = json_decode($data->getBody(),true);
-        $res = WeChatResponse::handle($data);
-        return $this->respond($res);
-    }
-
-    public function test(MerchantCheckResult $result)
-    {
-        $data = [
-            'ToUserName' => 'asd',
-            'FromUserName' =>'asd',
-            'CreateTime'=>111111,
-            'MsgType'=>'asd',
-            'Event'=>'asd',
-            'MerchantId'=>1312,
-            'IsPass'=>1,
-            'Reason'=>'no reason'
-        ];
-        $res = $result->create($data);
-        return $data;
     }
 
 }
