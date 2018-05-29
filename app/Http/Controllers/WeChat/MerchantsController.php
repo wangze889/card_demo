@@ -34,7 +34,7 @@ class MerchantsController extends CardsController
     public function create(Request $request)
     {
         $merchant = new Merchant();
-        $res = $merchant->create($request);
+        $res = $merchant->createMerchant($request);
         if($res){
             return $this->success('创建成功',$res->toArray());
         }else{
