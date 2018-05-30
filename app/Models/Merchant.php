@@ -102,6 +102,7 @@ class Merchant extends BaseModel
         WeChatResponse::handleFail($data);
         $data = collect($data)->only($this->complete_keys);
         $data = array_merge($data,['reason'=>'']);
+        return $data;
         $res = self::where('id','=',$request->input('id'))->update($data);
         return $res;
     }
