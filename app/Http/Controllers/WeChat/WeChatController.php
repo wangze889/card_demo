@@ -29,7 +29,9 @@ class WeChatController extends ApiController
 
     public function serve()
     {
+//        自动回复
         $this->app->server->push(PushHandler::class);
+
         return $this->app->server->serve();
 
     }
