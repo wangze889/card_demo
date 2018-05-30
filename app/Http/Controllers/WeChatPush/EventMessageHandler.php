@@ -36,12 +36,7 @@ class EventMessageHandler extends PushHandler
     {
         $merchant = new MerchantCheckResult();
         $merchant->handleCheckInfo($this->push_message);
-        $merchant->create($this->push_message);
-        $update = [
-            ''=>'',
-            ''=>'',
-            ''=>''
-        ];
+
         return "success";
     }
 

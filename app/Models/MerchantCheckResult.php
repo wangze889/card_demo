@@ -18,8 +18,9 @@ class MerchantCheckResult extends BaseModel
     {
 //    记录审核信息表
         self::create($message);
+//        更新商户微信审核字段
         Merchant::updateWeChatCheckResult($message);
-        return '';
+
     }
 
 
