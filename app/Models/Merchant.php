@@ -104,12 +104,12 @@ class Merchant extends BaseModel
         $data = EasyWeChat::officialAccount()->card->sub_merchant->create($info);
         WeChatResponse::handleFail($data);
 //        微信返回信息后补充字段
-        $data = collect($data)->only($this->complete_keys);
+        $data = collect($data)->only($this->complete_keys)->toArray();
         $res = self::where('id','=',$request->input('id'))->update($data);
         return $res;
     }
 
 
-    
+
 
 }
