@@ -10,6 +10,7 @@ namespace App\Models;
 
 
 use App\Exceptions\BaseException;
+use App\Helpers\Api\WeChatResponse;
 use App\Http\Controllers\WeChat\WeChatController;
 use Illuminate\Http\Request;
 use EasyWeChat;
@@ -56,6 +57,13 @@ class Merchant extends BaseModel
         'update_time'
     ];
 
+//
+    public function add(Request $request)
+    {
+        $attributes = $request->only($this->create_wechat_keys)->toArray();
+        $data = EasyWeChat::officialAccount()->card->sub_merchant->create($attributes);
+        return $data;
+    }
 //    新增商户
     public function createMerchant(Request $request)
     {
@@ -88,11 +96,11 @@ class Merchant extends BaseModel
             throw new BaseException('Model not found!');
         }
         if($merchant->platform_check_status!=1){
-            throw new BaseException('平台审核未通过!');
+            throw new BaseException('平台审核尚未通过!');
         }
         $info = $merchant->only($this->create_wechat_keys)->toArray();
         $data = EasyWeChat::officialAccount()->card->sub_merchant->create($info);
-        return $data;
+        $res =  collect();
     }
 
 
