@@ -79,6 +79,9 @@ class Merchant extends BaseModel
         if($request->input('reason')){
             $merchant->reason = $request->input('reason');
         }
+        if($request->input('platform_check_status')==1){
+            $merchant->reason = '';
+        }
         $res =  $merchant->save();
         if($res){
             return $merchant;
@@ -100,19 +103,13 @@ class Merchant extends BaseModel
         $info = $merchant->only($this->create_wechat_keys);
         $data = EasyWeChat::officialAccount()->card->sub_merchant->create($info);
         WeChatResponse::handleFail($data);
+//        微信返回信息后补充字段
         $data = collect($data)->only($this->complete_keys);
-        $data = array_merge($data,['reason'=>'']);
-        return $data;
         $res = self::where('id','=',$request->input('id'))->update($data);
         return $res;
     }
 
 
-
-//    微信返回信息后补充字段
-    public function completeAfterPushWeChat(Request $request)
-    {
-
-    }
+    
 
 }
