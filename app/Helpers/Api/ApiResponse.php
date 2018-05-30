@@ -8,6 +8,7 @@
 
 namespace App\Helpers\Api;
 
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response as FoundationResponse;
 use Response;
 
@@ -56,7 +57,7 @@ trait ApiResponse
         return Response::json($response,$this->getCode(),$header);
     }
 
-    public function message($msg, array $data = null, $code = null, $errorCode = null)
+    public function message($msg, $data = null, $code = null, $errorCode = null)
     {
         if ($code){
             $this->setCode($code);
@@ -70,7 +71,11 @@ trait ApiResponse
             'code' => $this->code,
             'errorCode' => $this->errorCode
         ];
+
         if($data){
+            if($data instanceof Collection){
+                $data = $data->toArray();
+            }
             $res = array_merge($res, compact('data'));
         }
         return $this->respond($res);
@@ -83,7 +88,7 @@ trait ApiResponse
     }
 
 
-    public function success($msg, array $data ,$code = FoundationResponse::HTTP_OK, $errorCode = 0 )
+    public function success($msg, $data = null ,$code = FoundationResponse::HTTP_OK, $errorCode = 0 )
     {
         return $this->message($msg, $data, $code, $errorCode);
     }

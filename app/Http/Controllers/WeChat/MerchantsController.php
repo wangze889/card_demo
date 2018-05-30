@@ -29,12 +29,6 @@ class MerchantsController extends CardsController
         $this->merchant = $this->card->sub_merchant;
     }
 
-    public function add(Request $request)
-    {
-        $merchant = new Merchant();
-        $res = $merchant->add($request);
-        return $res;
-    }
 
 //  创建商户，等待平台审核
     public function create(Request $request)
@@ -52,7 +46,12 @@ class MerchantsController extends CardsController
     public function platformCheck(Request $request)
     {
         $merchant = new Merchant();
-        return $merchant->platformCheck($request);
+        $res =  $merchant->platformCheck($request);
+        if($res){
+            return $this->success('success',$res);
+        }else{
+            return $this->failed('操作失败');
+        }
     }
 
 
@@ -60,8 +59,7 @@ class MerchantsController extends CardsController
     public function pushCreateToWeChat(Request $request)
     {
         $merchant = new Merchant();
-        $data =  $merchant->createToWeChat($request);
-//        return WeChatResponse::handle($data);
+        return $merchant->createToWeChat($request);
     }
 
 

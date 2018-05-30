@@ -57,14 +57,7 @@ class Merchant extends BaseModel
         'update_time'
     ];
 
-//
-    public function add(Request $request)
-    {
-        $attributes = $request->only($this->create_wechat_keys);
-        $attributes['end_time'] = strtotime($attributes['end_time']);
-        $data = EasyWeChat::officialAccount()->card->sub_merchant->create($attributes);
-        return $data;
-    }
+
 //    新增商户
     public function createMerchant(Request $request)
     {
@@ -83,10 +76,15 @@ class Merchant extends BaseModel
             throw new BaseException('Model not found!');
         }
         $merchant->platform_check_status = $request->input('platform_check_status');
-        if($merchant->input('reason')){
+        if($request->input('reason')){
             $merchant->reason = $request->input('reason');
         }
-        return $merchant->save();
+        $res =  $merchant->save();
+        if($res){
+            return $merchant;
+        }else{
+            return false;
+        }
     }
 
 //    推送至微信
@@ -99,9 +97,12 @@ class Merchant extends BaseModel
         if($merchant->platform_check_status!=1){
             throw new BaseException('平台审核尚未通过!');
         }
-        $info = $merchant->only($this->create_wechat_keys)->toArray();
+        $info = $merchant->only($this->create_wechat_keys);
         $data = EasyWeChat::officialAccount()->card->sub_merchant->create($info);
-        $res =  collect();
+        WeChatResponse::handleFail($data);
+        $data = collect($data)->only($this->complete_keys);
+        $res = self::where('id','=',$request->input('id'))->update($data);
+        return $res;
     }
 
 

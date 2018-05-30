@@ -34,12 +34,12 @@ Route::post('media/upload','Wechat\MediaController@uploadByType');
 
 Route::group(['prefix'=>'merchant'],function (){
     Route::get('list','WeChat\MerchantsController@lst');
-//    Route::post('create','WeChat\MerchantsController@create');
+    Route::post('create','WeChat\MerchantsController@create');
     Route::get('count','WeChat\MerchantsController@sum');
     Route::post('get','WeChat\MerchantsController@getOneInfoByMerchantId');
     Route::post('platCheck','WeChat\MerchantsController@platformCheck');
-    Route::post('push','WeChat\MerchantsController@createToWeChat');
-    Route::post('create','WeChat\MerchantsController@add');
+    Route::post('push','WeChat\MerchantsController@pushCreateToWeChat');
+
 });
 
 
