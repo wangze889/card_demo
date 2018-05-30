@@ -105,6 +105,7 @@ class Merchant extends BaseModel
         WeChatResponse::handleFail($data);
 //        微信返回信息后补充字段
         $data = collect($data['info'])->only($this->complete_keys)->toArray();
+        $data = array_merge($data,['wx_check_status'=>0]);
         $res = self::where('id','=',$request->input('id'))->update($data);
         return $res;
     }
