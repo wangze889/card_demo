@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers\WeChatPush;
 
+use App\Models\MerchantCheckResult;
+
 class EventMessageHandler extends PushHandler
 {
 
@@ -32,7 +34,15 @@ class EventMessageHandler extends PushHandler
 //    接收子商户审核事件
     public function handleCardMerchantCheckResult()
     {
-
+        $merchant = new MerchantCheckResult();
+        $merchant->handleCheckInfo($this->push_message);
+        $merchant->create($this->push_message);
+        $update = [
+            ''=>'',
+            ''=>'',
+            ''=>''
+        ];
+        return "success";
     }
 
 }

@@ -18,20 +18,21 @@ class PushHandler extends WeChatController implements EventHandlerInterface
 
     public function __construct()
     {
+        parent::__construct();
         $this->push_message = $this->app->server->getMessage();
     }
 
     public function handle($payload = null)
     {
-//        $MsgType = $this->push_message['MsgType'];
-//        $MsgType = $payload['MsgType'];
-//        $className = ucfirst(strtolower($MsgType))."MessageHandler";
-//        if(class_exists($className)){
-//            $message_handler = new $className();
-//            return $message_handler->reply($payload);
-//        }else{
-//            return '啊啊啊';
-//        };
-        return "啊哈哈";
+//        获取消息类型
+        $MsgType = $this->push_message['MsgType'];
+//      调用对应handler的reply方法
+        $className = "\\App\\Http\\Controllers\\WeChatPush\\".ucfirst(strtolower($MsgType))."MessageHandler";
+        if(class_exists($className)){
+            $message_handler = new $className();
+            return $message_handler->reply($payload);
+        }else{
+            return '';
+        }
     }
 }
