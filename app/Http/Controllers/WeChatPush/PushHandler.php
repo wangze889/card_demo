@@ -29,7 +29,7 @@ class PushHandler extends WeChatController implements EventHandlerInterface
             $message_handler = new $className();
             return $message_handler->reply();
         }else{
-            return '';
+            return '啊啊啊';
         };
     }
 }
