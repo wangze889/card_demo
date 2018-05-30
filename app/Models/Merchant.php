@@ -61,6 +61,7 @@ class Merchant extends BaseModel
     public function add(Request $request)
     {
         $attributes = $request->only($this->create_wechat_keys);
+        $attributes['end_time'] = strtotime($attributes['end_time']);
         $data = EasyWeChat::officialAccount()->card->sub_merchant->create($attributes);
         return $data;
     }
