@@ -12,8 +12,10 @@ namespace App\Http\Controllers\WeChat;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\WeChatPush\EventMessageHandler;
+use App\Http\Controllers\WeChatPush\PushHandler;
 use App\Models\MerchantCheckResult;
 use EasyWeChat;
+use function foo\func;
 
 class WeChatController extends ApiController
 {
@@ -65,7 +67,9 @@ class WeChatController extends ApiController
 //
 //            // ...
 //        });
-        $this->app->server->push(EventMessageHandler::class);
+        $this->app->server->push(function ($message){
+            return (new PushHandler())->handle($message);
+        });
 
         return $this->app->server->serve();
 
