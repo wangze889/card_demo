@@ -13,6 +13,7 @@ use App\Exceptions\BaseException;
 use App\Helpers\Api\WeChatResponse;
 use Illuminate\Http\Request;
 use EasyWeChat;
+use Illuminate\Support\Facades\DB;
 
 class Poi extends BaseModel
 {
@@ -31,8 +32,6 @@ class Poi extends BaseModel
         'offset_type',
         'longitude',
         'latitude',
-        'photo_list',
-        'photo_local_path_list',
         'recommend',
         'special',
         'introduction',
@@ -69,14 +68,21 @@ class Poi extends BaseModel
         'update_time'
     ];
 
+    public function photos()
+    {
+        return $this->hasMany('App\Models\PoiPhotoList', 'poi_id', 'id');
+    }
+
 //    接收创建的字段保存数据表等待审核
     public function createPoi(Request $request)
     {
         $attributes = $request->only($this->create_keys);
-        dump($attributes);die();
         $res = self::create($attributes);
+        $poi_id = $res->id;
+        $photo_id_list = $request->input('photo_id_list');
+        $photo_id_list = explode(',',$photo_id_list);
+        DB::table('poi_photo_lists')->whereIn('id',$photo_id_list)->update(['poi_id'=>$poi_id]);
         return $res;
-//        return $attributes;
     }
 
 //  推送至微信

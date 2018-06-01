@@ -11,6 +11,5 @@ namespace App\Models;
 
 class PoiPhotoList extends BaseModel
 {
-    public $timestamps = false;
 
 }
