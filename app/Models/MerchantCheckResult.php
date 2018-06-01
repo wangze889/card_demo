@@ -16,6 +16,7 @@ class MerchantCheckResult extends BaseModel
 //    处理审核信息
     public function handleCheckInfo($message)
     {
+
 //    记录审核信息表
         self::create($message);
 //        更新商户微信审核字段

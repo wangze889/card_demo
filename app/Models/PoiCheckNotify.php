@@ -11,7 +11,6 @@ namespace App\Models;
 
 class PoiCheckNotify extends BaseModel
 {
-    public $timestamps = false;
 
 //    处理审核信息
     public function handleCheckNotify($message)

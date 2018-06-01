@@ -51,6 +51,8 @@ Route::group(['prefix'=>'poi'],function (){
     Route::post('platCheck','WeChat\PoiController@platformCheck');
     Route::post('push','WeChat\PoiController@pushCreateToWeChat');
 
+    Route::post('uploadPhoto','WeChat\PoiController@uploadPoiPhoto');
+
 });
 
 

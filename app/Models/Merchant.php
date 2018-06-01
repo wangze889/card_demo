@@ -17,7 +17,6 @@ use EasyWeChat;
 
 class Merchant extends BaseModel
 {
-    public $timestamps = false;
 
 //    新增时接收的字段
     private $create_keys = [

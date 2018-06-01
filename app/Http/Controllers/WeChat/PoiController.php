@@ -9,7 +9,11 @@
 namespace App\Http\Controllers\WeChat;
 
 
+use App\Exceptions\BaseException;
+use App\Helpers\Api\WeChatResponse;
+use App\Http\Controllers\Upload\UploadImageController;
 use App\Models\Poi;
+use App\Models\PoiPhotoList;
 use Illuminate\Http\Request;
 
 class PoiController extends WeChatController
@@ -60,6 +64,25 @@ class PoiController extends WeChatController
         return Poi::count();
     }
 
+    public function uploadPoiPhoto(Request $request)
+    {
+        $url = UploadImageController::uploadImg('poi_photo',$request);
+        if($url){
+            $local_url = 'uploads/'.$url;
+            $res = $this->app->material->uploadImage(public_path($local_url));
+            WeChatResponse::handleFail($res);
+            $photo_url = $res['url'];
+            $data = array_merge(compact('local_url','photo_url'));
+            $res = PoiPhotoList::create($data);
+            if($res){
+                return $res;
+            }else{
+                return $this->failed('上传失败');
+            }
+        }else{
+            throw new BaseException('上传失败');
+        }
 
+    }
 
 }

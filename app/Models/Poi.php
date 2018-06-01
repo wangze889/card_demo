@@ -73,8 +73,10 @@ class Poi extends BaseModel
     public function createPoi(Request $request)
     {
         $attributes = $request->only($this->create_keys);
+        dump($attributes);die();
         $res = self::create($attributes);
         return $res;
+//        return $attributes;
     }
 
 //  推送至微信
