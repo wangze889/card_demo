@@ -56,7 +56,7 @@ class PoiController extends WeChatController
     //  分页拉取列表
     public function lst()
     {
-        return Poi::orderBy('id','desc')->get();
+        return Poi::photos()->orderBy('id','desc')->get();
     }
 
     public function sum()
