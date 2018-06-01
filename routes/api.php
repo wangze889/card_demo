@@ -42,5 +42,16 @@ Route::group(['prefix'=>'merchant'],function (){
 
 });
 
+//门店
+
+Route::group(['prefix'=>'poi'],function (){
+    Route::get('list','WeChat\PoiController@lst');
+    Route::post('create','WeChat\PoiController@create');
+    Route::get('count','WeChat\PoiController@sum');
+    Route::post('platCheck','WeChat\PoiController@platformCheck');
+    Route::post('push','WeChat\PoiController@pushCreateToWeChat');
+
+});
+
 
 Route::post('test','WeChat\MerchantsController@test');

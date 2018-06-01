@@ -13,6 +13,7 @@ use App\Exceptions\BaseException;
 use App\Helpers\Api\WeChatResponse;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Upload\UploadImageController;
+use App\Models\BaseModel;
 use App\Models\Merchant;
 use App\Models\MerchantCheckResult;
 use GuzzleHttp\Client;
@@ -21,6 +22,8 @@ use Illuminate\Http\Request;
 //子商户控制器
 class MerchantsController extends CardsController
 {
+    use CheckTrait;
+
     public $merchant;
 
     public function __construct()
@@ -43,17 +46,11 @@ class MerchantsController extends CardsController
     }
 
 //    平台审核
-    public function platformCheck(Request $request)
+    public function platformCheckMerchant(Request $request)
     {
         $merchant = new Merchant();
-        $res =  $merchant->platformCheck($request);
-        if($res){
-            return $this->success('success',$res);
-        }else{
-            return $this->failed('操作失败');
-        }
+        return $this->platformCheck($merchant,$request);
     }
-
 
 //    向微信端提交创建申请
     public function pushCreateToWeChat(Request $request)

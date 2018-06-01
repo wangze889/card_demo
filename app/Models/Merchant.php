@@ -67,28 +67,7 @@ class Merchant extends BaseModel
         return $res;
     }
 
-//    平台审核商户
-    public function platformCheck(Request $request)
-    {
-        $id = $request->input('id');
-        $merchant = self::find($id);
-        if(!$merchant){
-            throw new BaseException('Model not found!');
-        }
-        $merchant->platform_check_status = $request->input('platform_check_status');
-        if($request->input('reason')){
-            $merchant->reason = $request->input('reason');
-        }
-        if($request->input('platform_check_status')==1){
-            $merchant->reason = '';
-        }
-        $res =  $merchant->save();
-        if($res){
-            return $merchant;
-        }else{
-            return false;
-        }
-    }
+
 
 //    推送至微信
     public function createToWeChat(Request $request)
