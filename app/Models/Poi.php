@@ -72,11 +72,12 @@ class Poi extends BaseModel
         return $this->hasMany('App\Models\PoiPhotoList', 'poi_id', 'id');
     }
 
+
 //    接收创建的字段保存数据表等待审核
     public function createPoi(Request $request)
     {
         $attributes = $request->only($this->create_keys);
-        array_push($attributes,['merchant_id'=>1]);
+        $attributes = array_merge($attributes,['merchant_id'=>1]);
         $res = self::create($attributes);
         $poi_id = $res->id;
         $photo_id_list = $request->input('photo_id_list');
