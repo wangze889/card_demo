@@ -37,7 +37,7 @@ Route::group(['prefix'=>'merchant'],function (){
     Route::post('create','WeChat\MerchantsController@create');
     Route::get('count','WeChat\MerchantsController@sum');
     Route::post('get','WeChat\MerchantsController@getOneInfoByMerchantId');
-    Route::post('platCheck','WeChat\MerchantsController@platformCheck');
+    Route::post('platCheck','WeChat\MerchantsController@platformCheckMerchant');
     Route::post('push','WeChat\MerchantsController@pushCreateToWeChat');
 
 });
@@ -49,7 +49,7 @@ Route::group(['prefix'=>'poi'],function (){
     Route::get('get/{id}','WeChat\PoiController@get');
     Route::post('create','WeChat\PoiController@create');
     Route::get('count','WeChat\PoiController@sum');
-    Route::post('platCheck','WeChat\PoiController@platformCheck');
+    Route::post('platCheck','WeChat\PoiController@platformCheckPoi');
     Route::post('push','WeChat\PoiController@pushCreateToWeChat');
 
     Route::post('uploadPhoto','WeChat\PoiController@uploadPoiPhoto');

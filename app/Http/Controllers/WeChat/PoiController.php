@@ -53,6 +53,12 @@ class PoiController extends WeChatController
         return $poi->createToWeChat($request);
     }
 
+    public function platformCheckPoi(Request $request)
+    {
+        $poi = new Poi();
+        return $this->platformCheck($poi, $request);
+    }
+
     //  分页拉取列表
     public function lst()
     {
@@ -61,7 +67,9 @@ class PoiController extends WeChatController
 
     public function get($id)
     {
-        return Poi::find($id)->photos();
+        return Poi::with(['photo_list'=>function($query){
+            $query->select('poi_id','photo_url');
+        }])->find($id);
     }
 
     public function sum()

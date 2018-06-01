@@ -67,7 +67,7 @@ class Poi extends BaseModel
         'update_time'
     ];
 
-    public function photos()
+    public function photo_list()
     {
         return $this->hasMany('App\Models\PoiPhotoList', 'poi_id', 'id');
     }
@@ -98,7 +98,9 @@ class Poi extends BaseModel
         }
         $poi->categories = (array)($poi->categories);
         $info = $poi->only($this->create_wechat_keys);
-        $photo_list =
+//        $photo_list =
+        return $info;
+
         $data = EasyWeChat::officialAccount()->poi->create($info);
         WeChatResponse::handleFail($data);
 //        微信返回信息后补充字段
