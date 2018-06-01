@@ -48,7 +48,7 @@ class EventMessageHandler extends PushHandler
     public function handlePoiCheckNotify()
     {
         $poi_notify = new PoiCheckNotify();
-        $poi_notify->handleCheckNotify($this->push_message);
+        $me = $poi_notify->handleCheckNotify($this->push_message);
 
         return "收到门店审核通知";
 

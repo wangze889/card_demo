@@ -64,6 +64,13 @@ class PoiController extends WeChatController
         return Poi::count();
     }
 
+//    上传门店图片
+
+    /**
+     * @param Request $request
+     * @return PoiPhotoList
+     * @throws BaseException
+     */
     public function uploadPoiPhoto(Request $request)
     {
         $url = UploadImageController::uploadImg('poi_photo',$request);
@@ -82,7 +89,8 @@ class PoiController extends WeChatController
         }else{
             throw new BaseException('上传失败');
         }
-
     }
+
+
 
 }

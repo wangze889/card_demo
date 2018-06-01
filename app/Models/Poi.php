@@ -52,7 +52,6 @@ class Poi extends BaseModel
         'offset_type',
         'longitude',
         'latitude',
-        'photo_list',
         'recommend',
         'special',
         'introduction',
@@ -77,6 +76,7 @@ class Poi extends BaseModel
     public function createPoi(Request $request)
     {
         $attributes = $request->only($this->create_keys);
+        array_push($attributes,['merchant_id'=>1]);
         $res = self::create($attributes);
         $poi_id = $res->id;
         $photo_id_list = $request->input('photo_id_list');
@@ -95,7 +95,9 @@ class Poi extends BaseModel
         if($poi->platform_check_status!=1){
             throw new BaseException('平台审核尚未通过!');
         }
+        $poi->categories = (array)($poi->categories);
         $info = $poi->only($this->create_wechat_keys);
+        $photo_list =
         $data = EasyWeChat::officialAccount()->poi->create($info);
         WeChatResponse::handleFail($data);
 //        微信返回信息后补充字段
@@ -110,17 +112,17 @@ class Poi extends BaseModel
     public static function updateWeChatCheckResult($message)
     {
         $poi_id = $message['PoiId'];
-        $is_pass = $message['IsPass'];
-        if(array_key_exists('Reason',$message)){
-            $reason = $message['Reason'];
+        $is_pass = $message['Result'];
+        if(array_key_exists('msg',$message)){
+            $reason = $message['msg'];
         }else{
             $reason = '';
         }
         switch ($is_pass){
-            case 0:
+            case 'fail':
                 $wx_check_status = 2;
                 break;
-            case 1:
+            case 'succ':
                 $wx_check_status = 1;
                 break;
         }
