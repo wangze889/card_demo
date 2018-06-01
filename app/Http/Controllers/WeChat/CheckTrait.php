@@ -10,21 +10,21 @@ namespace App\Http\Controllers\WeChat;
 
 
 use App\Helpers\Api\ApiResponse;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\BaseModel;
 use Illuminate\Http\Request;
 
 trait CheckTrait
 {
-    use ApiResponse;
     //    平台审核
     public function platformCheck(BaseModel $model, Request $request)
     {
 //        $merchant = new Merchant();
         $res =  $model->platformCheck($request);
         if($res){
-            return $this->success('操作成功',$res);
+            return (new ApiController())->success('操作成功',$res);
         }else{
-            return $this->failed('操作失败');
+            return (new ApiController())->failed('操作失败');
         }
     }
 

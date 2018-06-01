@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\WeChatPush;
 
 use App\Models\MerchantCheckResult;
+use App\Models\PoiCheckNotify;
 
 class EventMessageHandler extends PushHandler
 {
@@ -20,6 +21,9 @@ class EventMessageHandler extends PushHandler
             switch ($this->push_message['Event']) {
                 case 'card_merchant_check_result':
                     return $this->handleCardMerchantCheckResult();
+                    break;
+                case 'poi_check_notify':
+                    return $this->handlePoiCheckNotify();
                     break;
                 default:
                     return "收到事件消息";
@@ -37,7 +41,17 @@ class EventMessageHandler extends PushHandler
         $merchant = new MerchantCheckResult();
         $merchant->handleCheckInfo($this->push_message);
 
-        return "success";
+        return "收到子商户审核";
+    }
+
+//    接收门店审核事件
+    public function handlePoiCheckNotify()
+    {
+        $poi_notify = new PoiCheckNotify();
+        $poi_notify->handleCheckNotify($this->push_message);
+
+        return "收到门店审核通知";
+
     }
 
 }

@@ -98,6 +98,29 @@ class Poi extends BaseModel
         return $res;
     }
 
+//  更新微信审核信息
+    public static function updateWeChatCheckResult($message)
+    {
+        $poi_id = $message['PoiId'];
+        $is_pass = $message['IsPass'];
+        if(array_key_exists('Reason',$message)){
+            $reason = $message['Reason'];
+        }else{
+            $reason = '';
+        }
+        switch ($is_pass){
+            case 0:
+                $wx_check_status = 2;
+                break;
+            case 1:
+                $wx_check_status = 1;
+                break;
+        }
+        $info = compact('wx_check_status','reason');
+
+        self::where('poi_id','=',$poi_id)->update($info);
+
+    }
 
 
 }

@@ -60,6 +60,6 @@ class PoiController extends WeChatController
         return Poi::count();
     }
 
-    
+
 
 }
