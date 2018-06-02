@@ -111,7 +111,8 @@ class Poi extends BaseModel
         WeChatResponse::handleFail($data);
 //        微信返回信息后补充字段
         $poi_id = $data['poi_id'];
-        $data = array_merge(compact($poi_id),['wx_check_status'=>0]);
+        $data = array_merge(compact('poi_id'),['wx_check_status'=>0]);
+//        dd($data);
 
         $res = self::where('id','=',$id)->update($data);
         return $res;
