@@ -118,4 +118,9 @@ class PoiController extends WeChatController
         return $this->poi->list($begin,$limit);
     }
 
+//    删除微信端门店
+    public function deleteByPoiId($poiId)
+    {
+        return $this->poi->delete($poiId);
+    }
 }

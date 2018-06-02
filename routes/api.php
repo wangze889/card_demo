@@ -54,6 +54,7 @@ Route::group(['prefix'=>'poi'],function (){
 
     Route::post('uploadPhoto','WeChat\PoiController@uploadPoiPhoto');
     Route::get('weChatList/{from}/{limit}', 'WeChat\PoiController@getListFromWeChat');
+    Route::delete('delete/{poiId}','WeChat\PoiController@deleteByPoiId');
 
 });
 
