@@ -21,7 +21,7 @@ class BaseModel extends Model
     public function platformCheck(Request $request)
     {
         $id = $request->input('id');
-        $model = $this->find($id);
+        $model = self::find($id);
         if(!$model){
             throw new BaseException('Model not found!');
         }

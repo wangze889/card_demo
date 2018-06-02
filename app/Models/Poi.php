@@ -56,7 +56,8 @@ class Poi extends BaseModel
         'special',
         'introduction',
         'open_time',
-        'avg_price'
+        'avg_price',
+        'photo_list'
     ];
 
     //微信返回后补全的字段
@@ -89,25 +90,29 @@ class Poi extends BaseModel
 //  推送至微信
     public function createToWeChat(Request $request)
     {
-        $poi = self::find($request->input('id'));
+        $poi_id = $request->input('id');
+        $poi = self::find($poi_id);
         if(!$poi){
             throw new BaseException('Model not found!');
         }
         if($poi->platform_check_status!=1){
             throw new BaseException('平台审核尚未通过!');
         }
+//        处理categories
         $poi->categories = (array)($poi->categories);
+//        过滤字段
         $info = $poi->only($this->create_wechat_keys);
-//        $photo_list =
-        return $info;
-
+//        获取照片列表
+        $photo_list = PoiPhotoList::getPhotosByPoiId($poi_id)->toArray();
+        $info = array_merge($info,compact('photo_list'));
+//        dd($info);
         $data = EasyWeChat::officialAccount()->poi->create($info);
         WeChatResponse::handleFail($data);
 //        微信返回信息后补充字段
         $poi_id = $data['poi_id'];
         $data = array_merge(compact($poi_id),['wx_check_status'=>0]);
-//        $data =
-        $res = self::where('id','=',$request->input('id'))->update($data);
+
+        $res = self::where('id','=',$poi_id)->update($data);
         return $res;
     }
 

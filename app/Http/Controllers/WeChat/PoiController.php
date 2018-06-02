@@ -68,9 +68,11 @@ class PoiController extends WeChatController
     public function get($id)
     {
         return Poi::with(['photo_list'=>function($query){
-            $query->select('poi_id','photo_url');
+            $query;
         }])->find($id);
     }
+
+
 
     public function sum()
     {
