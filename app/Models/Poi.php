@@ -90,8 +90,8 @@ class Poi extends BaseModel
 //  推送至微信
     public function createToWeChat(Request $request)
     {
-        $poi_id = $request->input('id');
-        $poi = self::find($poi_id);
+        $id = $request->input('id');
+        $poi = self::find($id);
         if(!$poi){
             throw new BaseException('Model not found!');
         }
@@ -103,7 +103,7 @@ class Poi extends BaseModel
 //        过滤字段
         $info = $poi->only($this->create_wechat_keys);
 //        获取照片列表
-        $photo_list = PoiPhotoList::getPhotosByPoiId($poi_id)->toArray();
+        $photo_list = PoiPhotoList::getPhotosByPoiId($id)->toArray();
         $info = array_merge($info,compact('photo_list'));
 //        dd($info);
         $data = EasyWeChat::officialAccount()->poi->create($info);
@@ -113,7 +113,7 @@ class Poi extends BaseModel
         $poi_id = $data['poi_id'];
         $data = array_merge(compact($poi_id),['wx_check_status'=>0]);
 
-        $res = self::where('id','=',$poi_id)->update($data);
+        $res = self::where('id','=',$id)->update($data);
         return $res;
     }
 
