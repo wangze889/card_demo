@@ -107,6 +107,7 @@ class Poi extends BaseModel
         $info = array_merge($info,compact('photo_list'));
 //        dd($info);
         $data = EasyWeChat::officialAccount()->poi->create($info);
+//        return $data;
         WeChatResponse::handleFail($data);
 //        微信返回信息后补充字段
         $poi_id = $data['poi_id'];

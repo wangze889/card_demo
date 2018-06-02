@@ -50,7 +50,12 @@ class PoiController extends WeChatController
     public function pushCreateToWeChat(Request $request)
     {
         $poi = new Poi();
-        return $poi->createToWeChat($request);
+        $res =  $poi->createToWeChat($request);
+        if($res){
+            return $this->success('推送成功');
+        }else{
+            return $this->failed('操作失败');
+        }
     }
 
     public function platformCheckPoi(Request $request)
