@@ -47,12 +47,14 @@ Route::group(['prefix'=>'merchant'],function (){
 Route::group(['prefix'=>'poi'],function (){
     Route::get('list','WeChat\PoiController@lst');
     Route::get('get/{id}','WeChat\PoiController@get');
+
+    Route::post('uploadPhoto','WeChat\PoiController@uploadPoiPhoto');
     Route::post('create','WeChat\PoiController@create');
     Route::get('count','WeChat\PoiController@sum');
     Route::post('platCheck','WeChat\PoiController@platformCheckPoi');
     Route::post('push','WeChat\PoiController@pushCreateToWeChat');
 
-    Route::post('uploadPhoto','WeChat\PoiController@uploadPoiPhoto');
+
     Route::get('weChatList/{from}/{limit}', 'WeChat\PoiController@getListFromWeChat');
     Route::delete('delete/{poiId}','WeChat\PoiController@deleteByPoiId');
 
