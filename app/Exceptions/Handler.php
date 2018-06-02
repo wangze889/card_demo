@@ -52,32 +52,36 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($request->is('api/*')) {
-            if($exception instanceof BaseException){
-                $this->errorCode = $exception->errorCode;
-                $this->code = $exception->code;
-                $this->msg = $exception->msg;
-            }else{
-                $error = $this->convertExceptionToResponse($exception);
-                $this->code = $error->getStatusCode();
-                $this->msg = 'something error';
-                $this->errorCode = 10000;
-                if (config('app.debug')) {
-                    $this->msg = empty($exception->getMessage()) ? 'something error' : $exception->getMessage();
+        if(config('kaiguan.api_return')){
+            if($request->is('api/*')) {
+                if($exception instanceof BaseException){
+                    $this->errorCode = $exception->errorCode;
+                    $this->code = $exception->code;
+                    $this->msg = $exception->msg;
+                }else{
+                    $error = $this->convertExceptionToResponse($exception);
+                    $this->code = $error->getStatusCode();
+                    $this->msg = 'something error';
+                    $this->errorCode = 10000;
+                    if (config('app.debug')) {
+                        $this->msg = empty($exception->getMessage()) ? 'something error' : $exception->getMessage();
 //                if ($error->getStatusCode() >= 500) {
 //                    if (config('app.debug')) {
 //                        $response['trace'] = $exception->getTraceAsString();
 //                        $response['code'] = $exception->getCode();
 //                    }
 //                }
+                    }
                 }
+                $response = [
+                    'code'=>$this->code,
+                    'errorCode'=>$this->errorCode,
+                    'msg'=>$this->msg,
+                ];
+                return response()->json($response, $this->code);
+            }else{
+                return parent::render($request, $exception);
             }
-            $response = [
-                'code'=>$this->code,
-                'errorCode'=>$this->errorCode,
-                'msg'=>$this->msg,
-            ];
-            return response()->json($response, $this->code);
         }else{
             return parent::render($request, $exception);
         }
