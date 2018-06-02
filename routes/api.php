@@ -53,6 +53,7 @@ Route::group(['prefix'=>'poi'],function (){
     Route::post('push','WeChat\PoiController@pushCreateToWeChat');
 
     Route::post('uploadPhoto','WeChat\PoiController@uploadPoiPhoto');
+    Route::get('weChatList', 'WeChat\PoiController@getListFromWeChat');
 
 });
 

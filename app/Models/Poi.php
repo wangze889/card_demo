@@ -143,4 +143,5 @@ class Poi extends BaseModel
     }
 
 
+
 }

@@ -112,5 +112,10 @@ class PoiController extends WeChatController
         }
     }
 
+//        获取微信端门店列表
+    public function getListFromWeChat($begin,$limit)
+    {
+        return $this->poi->list($begin,$limit);
+    }
 
 }
