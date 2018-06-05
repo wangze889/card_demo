@@ -110,6 +110,14 @@ class PoiController extends WeChatController
         }
     }
 
+//    测试用修改接口
+    public function edit(Request $request)
+    {
+        $poi_id = $request->input('poi_id');
+        $data = $request->only((new Poi())->create_wechat_keys);
+        return $this->poi->update($poi_id,$data);
+    }
+
 //        获取微信端门店列表
     public function getListFromWeChat($begin,$limit)
     {

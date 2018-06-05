@@ -40,7 +40,7 @@ class Poi extends BaseModel
     ];
 
 //   推送给微信的字段
-    private $create_wechat_keys = [
+    public $create_wechat_keys = [
         'business_name',
         'branch_name',
         'province',
