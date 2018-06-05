@@ -57,6 +57,7 @@ Route::group(['prefix'=>'poi'],function (){
 
     Route::get('weChatList/{from}/{limit}', 'WeChat\PoiController@getListFromWeChat');
     Route::delete('delete/{poiId}','WeChat\PoiController@deleteByPoiId');
+    Route::patch('edit','WeChat\PoiController@edit');
 
 });
 
