@@ -10,6 +10,8 @@ namespace App\Http\Controllers\WeChat;
 
 
 //卡券控制器
+use Illuminate\Http\Request;
+
 class CardsController extends WeChatController
 {
     public $card;
@@ -19,6 +21,23 @@ class CardsController extends WeChatController
         parent::__construct();
 
         $this->card = $this->app->card;
+    }
+
+    public function create(Request $request)
+    {
+        $a = <<<aaa
+        {
+            "card_type":"",
+            "attributes":{
+                "base_info":"",
+                "advanced_info":"",
+                ...
+
+            },
+            
+          
+        }
+aaa;
     }
 
 
