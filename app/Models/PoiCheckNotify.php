@@ -9,7 +9,7 @@
 namespace App\Models;
 
 
-
+//门店审核推送
 class PoiCheckNotify extends BaseModel
 {
     protected $table = 'poi_check_notify';

@@ -25,19 +25,7 @@ class CardsController extends WeChatController
 
     public function create(Request $request)
     {
-        $a = <<<aaa
-        {
-            "card_type":"",
-            "attributes":{
-                "base_info":"",
-                "advanced_info":"",
-                ...
 
-            },
-            
-          
-        }
-aaa;
     }
 
 

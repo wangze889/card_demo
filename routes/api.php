@@ -62,4 +62,6 @@ Route::group(['prefix'=>'poi'],function (){
 });
 
 
-Route::post('test','WeChat\MerchantsController@test');
+
+
+Route::get('test','TestController@mysqlJsonTest');

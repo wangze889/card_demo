@@ -128,6 +128,7 @@ class Poi extends BaseModel
         }else{
             $reason = '';
         }
+//        $wx_check_status = 0;
         switch ($is_pass){
             case 'fail':
                 $wx_check_status = 2;
